@@ -496,11 +496,11 @@ const DATA = {
     status: "● IMPLEMENTADO (Dinet S.A.)",
     chips: ["AppSheet", "Excel VBA", "Macros", "Data Modeling"],
     star: [
-      ["Situación", "Durante la planificación de capacidades operativas para la proyección 2030 de Cencosud, audité la base de datos histórica ('As-is') y encontré un registro manual carente de granularidad. Los operadores agrupaban múltiples transportes bajo un solo bloque de tiempo (ej. 5 camiones de Samsung promediados en 10 horas) e introducían errores de tipado, como escribir la palabra 'FECHA' en columnas numéricas. Esto imposibilitaba calcular la capacidad real de las rampas o el Touch Time individual por vehículo.", "asis"],
-      ["Tarea", "Diseñar un Sistema de Gestión de Patio (YMS) autónomo que forzara el registro unitario por transporte, estandarizara la captura de tiempos y alimentara automáticamente el modelo de capacidades sin intervención manual."],
+      ["Situación", "Durante la planificación de capacidades operativas para la proyección 2030 de Cencosud, audité la base de datos histórica y encontré un registro manual carente de granularidad. Los operadores agrupaban múltiples transportes bajo un solo bloque de tiempo (ej. 5 camiones de Samsung promediados en 10 horas) e introducían errores de tipado, como escribir la palabra 'FECHA' en columnas numéricas. Esto imposibilitaba calcular la capacidad real de las rampas o el Touch Time individual por vehículo.", "asis"],
+      ["Tarea", "Diseñar un Sistema de Gestión de Patio (tipo YMS) que estandarizará el registro unitario por transporte, facilitará la captura ágil de tiempos en campo y alimentará automáticamente los indicadores de capacidad"],
       [
         "Acción", 
-        "Desarrollé una interfaz móvil en AppSheet para uso en patio, estructurando el flujo en estados restrictivos (1. PENDIENTE, 2. EN PLAYA, 3. EN RAMPA, 4. ATENDIDO). El aplicativo captura con precisión timestamps de hitos logísticos (llegada, inicio/fin de descarga) y volumetría (Paletas ISO). Para el back-office, construí un ecosistema de macros en Excel que genera plantillas estandarizadas y consolida la data estructurada de los estados para su análisis masivo.", 
+        "Desarrollé una interfaz móvil en AppSheet para uso en patio, estructurando el flujo en estados restrictivos (1. PENDIENTE, 2. EN PLAYA, 3. EN RAMPA, 4. ATENDIDO). El aplicativo captura con precisión timestamps de hitos logísticos (llegada, inicio/fin de descarga) y volumetría (Paletas ingresadas). Para el back-office, construí un ecosistema de macros en Excel que genera plantillas estandarizadas y consolida la data estructurada de los estados para su análisis masivo.", 
         [
           { key: "accion_plantilla", label: "[ Back-office ] Plantilla de Control Excel" },
           { key: "status_plantilla", label: "[ Back-office ] Matriz Status Plantilla" }
@@ -523,7 +523,7 @@ const DATA = {
     chips: ["AppSheet", "Python (openpyxl)", "Automatización", "Data Relacional"],
     star: [
       ["Situación", "La generación de reportes de calidad para la recepción de abarrotes era un proceso altamente manual y propenso a errores. Los inspectores invertían horas maquetando hojas de cálculo, redimensionando y alineando fotografías celda por celda. Además, las observaciones y averías se consolidaban en collages desordenados, perdiendo la trazabilidad relacional entre la incidencia, el lote específico, el código del producto y el contenedor original.", "asis"],
-      ["Tarea", "Digitalizar la captura de datos en campo para independizar el registro de lotes de la maquetación visual, garantizando que cada observación y fotografía quede estrictamente vinculada a su nivel jerárquico correspondiente (Contenedor > SKU > Lote)."],
+      ["Tarea", "Digitalizar la captura de datos en campo para independizar el registro de lotes de la maquetación visual, garantizando que cada observación y fotografía quede estrictamente vinculada a su nivel jerárquico correspondiente (Contenedor > Importación > Orden de compra > SKU > Lote)."],
       ["Acción", "Desplegué una aplicación móvil (AppSheet) que guía al inspector mediante flujos de captura estructurados: registro de cantidades por lote, detalles generales y observaciones precisas por contenedor. En el back-end, implementé un script en Python utilizando la librería openpyxl. El script lee la base relacional y renderiza automáticamente el reporte en Excel, inyectando y dimensionando las fotografías en sus celdas correspondientes sin intervención humana."],
       [
         "Resultado", 
@@ -542,15 +542,15 @@ const DATA = {
     star: [
       [
         "Situación", 
-        "La desestabilización lógica del WMS provocó que la atención de la ola de pedidos dependiera en un 40% de retiros directos desde ubicaciones en altura, degradando el ciclo de bajado hasta un 68% al extraer del 7° nivel en lugar del 2°. Esto generaba un severo 'valle de productividad' durante la primera hora del turno (07:00 a 08:00 AM), ya que los pickers debían esperar a que los elevadoristas bajaran paletas de emergencia. Los flujos de aprobación y generación de tareas tomaban hasta 1.5 horas, frenando la operación.", 
+        "Tras la desestabilización de la lógica del WMS, una parte relevante de los pedidos requería retiro desde ubicaciones en altura (aproximadamente 240 pallets por turno entre todas las categorías), lo que generaba un cuello de botella durante la primera hora de turno (7-8 AM), ya que mientras se completaba la generación de tareas y el bajado de pallets, los pickers quedaban a la espera. Además, el flujo de aprobación de pedidos, que incluye validación de stock, factores y eliminación de duplicidad, tomaba entre 45 minutos y 1 hora según la experiencia del operador, más 20 minutos adicionales de generación.", 
         [
           { key: "asis_grafico", label: "[ Análisis ] Valle de Productividad LPNs/hr" }
         ]
       ],
-      ["Tarea", "Desarrollar un motor de priorización estático enfocado en el reabastecimiento del primer nivel (piso) para las categorías FOOD y ELECTRO, y rediseñar operativamente los pasillos para eliminar los tiempos de espera y alcanzar el SLA de 20 Líneas por Hora Hombre (L/HH)."],
+      ["Tarea", "Desarrollar un motor de priorización que determinara, antes de cada turno, qué pallets bajar a nivel de piso para las categorías con contrato de 20 L/HH, eliminando la espera inicial y sustentando la decisión con un método validable."],
       [
         "Acción", 
-        "Programé un algoritmo matemático en VBA que corre directamente en memoria RAM. Este motor evalúa la urgencia (fecha del pedido), frecuencia de aparición y volumen para seleccionar qué SKUs bajar, aplicando reglas de 4 niveles (FEFO > Jerarquía UM > Clearing de saldo > Enrutamiento). A nivel físico, se aislaron 2 pasillos por categoría, bloqueando el almacenamiento de paletas completas en piso y aplicando técnicas de <b>Slotting</b> (ordenando artículos de mayor peso al inicio de la ruta de picking) para evitar tiempos de reacomodo.", 
+        "Construí una herramienta en VBA que analiza la data del WMS y genera un listado priorizado de pallets a bajar por categoría. Validé la efectividad del modelo comparando, al día siguiente, mi listado contra las ubicaciones que el propio sistema seleccionó al generar las tareas de la ola de pedidos, obteniendo una coincidencia total. En paralelo, levanté un rediseño del slotting físico en las categorías FOOD y ELECTRO, colocando los productos más densos como atunes, aceites y conservas al inicio del pasillo y los más ligeros al final, para reducir el reacomodo de pallets.", 
         [
           { key: "accion_hoja1", label: "[ Output Macro ] Hoja de Trabajo 1" },
           { key: "accion_hoja2", label: "[ Output Macro ] Hoja de Trabajo 2" }
@@ -558,7 +558,7 @@ const DATA = {
       ],
       [
         "Resultado", 
-        "Evolución radical del ratio de atención en FOOD y ELECTRO: pasamos de 60/40 a <b>80% piso y 20% altura</b>. La asertividad de la plantilla alcanzó el 100%, logrando bajar de <b>210 a 220 paletas preventivas por turno</b> (dejando fuera temporalmente a NON FOOD por su alta rotación de SKUs activos). El valle productivo matutino fue erradicado, permitiendo iniciar el pico de picking directamente a las 07:00 AM. Como impacto final, el <i>throughput</i> en FOOD creció de 20 a 26-28 L/HH, elevando la productividad general a <b>23 L/HH</b> y superando la meta contractual.", 
+        "Logré reducir el volumen de pallets a bajar por turno de aproximadamente 240 a 140, aunque sigo refinando ese dato porque parte del conteo original correspondía a pedidos paletizados que no deberían contarse, ya que solo se bajan al final del turno para colocarles etiqueta; actualmente estoy ajustando la macro para que distinga y excluya automáticamente esos pallets. Confirmé una coincidencia total al validar mi listado contra la selección del sistema. A lo largo de este mes he monitoreado la participación piso/altura, pasando de un 60/40 a un 80/20, con datos que respaldan esa mejora particularmente en ELECTRO. En FOOD, el supervisor reportó un salto de aproximadamente 20 a 26-28 líneas por hora-hombre, llevando la productividad general ponderada (FOOD, NON FOOD, ELECTRO y ALTO VALOR) a un estimado de 23 L/HH", 
         [
           { key: "resultado_food", label: "[ Impacto ] Participación Piso vs Altura (FOOD)" },
           { key: "resultado_electro", label: "[ Impacto ] Participación Piso vs Altura (ELECTRO)" }
