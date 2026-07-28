@@ -316,7 +316,20 @@
     flex-direction: column;
   }
   
-  .shot img { display: block; width: 100%; height: auto; flex: 1; object-fit: contain; background: rgba(0,0,0,0.2); }
+  .shot img { 
+    display: block; 
+    width: 100%; 
+    height: auto; 
+    flex: 1; 
+    object-fit: contain; 
+    background: rgba(0,0,0,0.2); 
+    cursor: zoom-in;
+    transition: var(--transition);
+  }
+  
+  .shot img:hover {
+    opacity: 0.9;
+  }
   
   .shot .placeholder {
     padding: 40px 20px; 
@@ -354,6 +367,69 @@
   .multi-shot .shot {
     margin-top: 0; 
     height: 100%;
+  }
+
+  /* Lightbox Modal Styles */
+  #lightbox {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(11, 16, 26, 0.92);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px;
+    backdrop-filter: blur(5px);
+  }
+  
+  #lightbox.active {
+    display: flex;
+  }
+  
+  #lightbox img {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+  
+  #lightbox .lb-caption {
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--frost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  
+  #lightbox .lb-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+  }
+  
+  #lightbox .lb-close:hover {
+    border-color: var(--frost);
+    color: var(--frost);
   }
 
   footer { 
@@ -404,6 +480,13 @@
   </div>
 
   <footer>{ Sistema Operativo: Metodología STAR — Situación · Tarea · Acción · Resultado }</footer>
+</div>
+
+<!-- Lightbox Modal Container -->
+<div id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox()">&times;</button>
+  <img id="lb-img" src="" alt="Zoom">
+  <div class="lb-caption" id="lb-cap"></div>
 </div>
 
 <script>
@@ -501,13 +584,30 @@ const IMAGES = {
     resultado_reporte: "./YMS/REGISTRO CANTIDADES.png"   
   },
   reabasto: { 
-    asis_grafico: "./YMS/Creacion.jpeg",       // Agrega aquí la ruta de la foto del gráfico LPNs
-    accion_hoja1: "./YMS/REABASTO GENERAL.jpeg",       // Agrega aquí la ruta de la Hoja 1 de la macro
-    accion_hoja2: "./YMS/REABASTO TRABAJO.jpeg",       // Agrega aquí la ruta de la Hoja 2 de la macro
-    resultado_food: "./YMS/FOOD.jpeg",     // Agrega aquí la ruta del gráfico de participación FOOD
-    resultado_electro: "./YMS/ELECTRO.jpeg"   // Agrega aquí la ruta del gráfico de participación ELECTRO
+    asis_grafico: "./YMS/Creacion.jpeg",       
+    accion_hoja1: "./YMS/REABASTO GENERAL.jpeg",       
+    accion_hoja2: "./YMS/REABASTO TRABAJO.jpeg",       
+    resultado_food: "./YMS/FOOD.jpeg",     
+    resultado_electro: "./YMS/ELECTRO.jpeg"   
   }
 };
+
+// Funcionalidad de Lightbox (Zoom)
+function openLightbox(src, caption) {
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  
+  lbImg.src = src;
+  lbCap.textContent = caption;
+  lb.classList.add('active');
+}
+
+function closeLightbox(e) {
+  if (!e || e.target.id === 'lightbox' || e.target.classList.contains('lb-close')) {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+}
 
 // Modificado para aceptar objetos individuales de configuración o strings simples
 function shotBlock(projectId, imgConfig){
@@ -524,7 +624,10 @@ function shotBlock(projectId, imgConfig){
   const src = IMAGES[projectId] && IMAGES[projectId][key];
 
   if (src) {
-    return `<div class="shot"><img src="${src}" alt="${label}"><div class="cap">${label}</div></div>`;
+    return `<div class="shot">
+              <img src="${src}" alt="${label}" onclick="openLightbox('${src}', '${label}')" title="Haz clic para ampliar">
+              <div class="cap">${label}</div>
+            </div>`;
   }
   return `<div class="shot">
             <div class="placeholder">
