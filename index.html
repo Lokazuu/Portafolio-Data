@@ -347,7 +347,8 @@
   /* Grid configuration for multiple photos */
   .multi-shot {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* Ajustado para que 4 imágenes formen una grilla equilibrada 2x2 en pantallas grandes */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
     margin-top: 16px;
   }
@@ -420,6 +421,7 @@ const DATA = {
         "Desarrollé una interfaz móvil en AppSheet para uso en patio, estructurando el flujo en estados restrictivos (1. PENDIENTE, 2. EN PLAYA, 3. EN RAMPA, 4. ATENDIDO). El aplicativo captura con precisión timestamps de hitos logísticos (llegada, inicio/fin de descarga) y volumetría (Paletas ISO). Para el back-office, construí un ecosistema de macros en Excel que genera plantillas estandarizadas y consolida la data estructurada de los estados para su análisis masivo.", 
         [
           { key: "accion_plantilla", label: "[ Back-office ] Plantilla de Control Excel" },
+          { key: "status_plantilla", label: "[ Back-office ] Matriz Status Plantilla" },
           { key: "accion_app1", label: "[ Front-end ] Captura de tiempos logísticos" },
           { key: "accion_app2", label: "[ Front-end ] Dashboard de Estados restrictivos" }
         ]
@@ -456,8 +458,8 @@ const IMAGES = {
   yms: { 
     asis: "./YMS/reporte_anterior.jpeg", 
     tobe: "./img/yms-despues.jpg",
-    accion_plantilla: "./YMS/plantilla_local.png", // Agrega aquí la ruta de la foto de tu plantilla Excel
-    status_plantilla:"./YMS/STATUS.jpeg",
+    accion_plantilla: "./YMS/plantilla_local.png", 
+    status_plantilla: "./YMS/STATUS.jpeg",
     accion_app1: "",      // Agrega aquí la ruta de la primera foto del aplicativo
     accion_app2: ""       // Agrega aquí la ruta de la segunda foto del aplicativo
   },
