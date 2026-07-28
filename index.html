@@ -443,7 +443,14 @@ const DATA = {
       ["Situación", "La generación de reportes de calidad para la recepción de abarrotes era un proceso altamente manual y propenso a errores. Los inspectores invertían horas maquetando hojas de cálculo, redimensionando y alineando fotografías celda por celda. Además, las observaciones y averías se consolidaban en collages desordenados, perdiendo la trazabilidad relacional entre la incidencia, el lote específico, el código del producto y el contenedor original.", "asis"],
       ["Tarea", "Digitalizar la captura de datos en campo para independizar el registro de lotes de la maquetación visual, garantizando que cada observación y fotografía quede estrictamente vinculada a su nivel jerárquico correspondiente (Contenedor > SKU > Lote)."],
       ["Acción", "Desplegué una aplicación móvil (AppSheet) que guía al inspector mediante flujos de captura estructurados: registro de cantidades por lote, detalles generales y observaciones precisas por contenedor. En el back-end, implementé un script en Python utilizando la librería openpyxl. El script lee la base relacional y renderiza automáticamente el reporte en Excel, inyectando y dimensionando las fotografías en sus celdas correspondientes sin intervención humana."],
-      ["Resultado", "Reducción del 100% del tiempo invertido en formateo manual de imágenes y eliminación del riesgo de pérdida de trazabilidad en las observaciones. El proceso pasó de ser una carga administrativa a un flujo de auditoría ágil, entregando reportes de calidad estructurados de forma inmediata tras finalizar la inspección en rampa.", "tobe"]
+      [
+        "Resultado", 
+        "Reducción del 100% del tiempo invertido en formateo manual de imágenes y eliminación del riesgo de pérdida de trazabilidad en las observaciones. El proceso pasó de ser una carga administrativa a un flujo de auditoría ágil, entregando reportes de calidad estructurados de forma inmediata tras finalizar la inspección en rampa.", 
+        [
+          { key: "resultado_app", label: "[ App UI ] Captura en Campo" },
+          { key: "resultado_reporte", label: "[ Output ] Reporte Automatizado" }
+        ]
+      ]
     ]
   },
   reabasto: {
@@ -465,11 +472,15 @@ const IMAGES = {
     asis: "./YMS/reporte_anterior.jpeg", 
     accion_plantilla: "./YMS/plantilla_local.png", 
     status_plantilla: "./YMS/STATUS.jpeg",
-    resultado_menu: "./YMS/Menu Principal.png",      // Agrega aquí la ruta de la foto de tu Menú Principal
-    resultado_locales: "./YMS/REGISTRO LOCALES.png",   // Agrega aquí la ruta de la foto de tu Pantalla de Locales
-    resultado_detalles: "./YMS/Detalle_locales.png"   // Agrega aquí la ruta de la foto de tu Captura de Detalles
+    resultado_menu: "./YMS/Menu Principal.png",      
+    resultado_locales: "./YMS/REGISTRO LOCALES.png",   
+    resultado_detalles: "./YMS/Detalle_locales.png"   
   },
-  calidad: { asis: "./img/calidad-antes.jpg", tobe: "" },
+  calidad: { 
+    asis: "./YMS/Ingreso Calidad.png", 
+    resultado_app: "./YMS/REGISTRO CONTENEDORES.png",      // Agrega aquí la ruta de la foto de la interfaz de la App
+    resultado_reporte: "./YMS/REGISTRO CANTIDADES.png"   // Agrega aquí la ruta de la foto del Reporte Generado
+  },
   reabasto: { asis: "", tobe: "" }
 };
 
