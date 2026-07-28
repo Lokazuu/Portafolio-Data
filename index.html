@@ -347,13 +347,12 @@
   /* Grid configuration for multiple photos */
   .multi-shot {
     display: grid;
-    /* Ajustado para que 4 imágenes formen una grilla equilibrada 2x2 en pantallas grandes */
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
     margin-top: 16px;
   }
   .multi-shot .shot {
-    margin-top: 0; /* Remove top margin when inside grid */
+    margin-top: 0; 
     height: 100%;
   }
 
@@ -458,10 +457,30 @@ const DATA = {
     status: "● VERSIÓN ESTABLE",
     chips: ["VBA Avanzado", "In-Memory WMS", "Slotting", "Análisis de Tiempos"],
     star: [
-      ["Situación", "La desestabilización lógica del WMS provocó que la atención de la ola de pedidos dependiera en un 40% de retiros directos desde ubicaciones en altura. Esto generaba un severo 'valle de productividad' durante la primera hora del turno (07:00 a 08:00 AM), ya que los pickers debían esperar a que los elevadoristas bajaran paletas de emergencia. Los flujos de aprobación y generación de tareas tomaban hasta 1.5 horas, frenando la operación.", "asis"],
+      [
+        "Situación", 
+        "La desestabilización lógica del WMS provocó que la atención de la ola de pedidos dependiera en un 40% de retiros directos desde ubicaciones en altura, degradando el ciclo de bajado hasta un 68% al extraer del 7° nivel en lugar del 2°. Esto generaba un severo 'valle de productividad' durante la primera hora del turno (07:00 a 08:00 AM), ya que los pickers debían esperar a que los elevadoristas bajaran paletas de emergencia. Los flujos de aprobación y generación de tareas tomaban hasta 1.5 horas, frenando la operación.", 
+        [
+          { key: "asis_grafico", label: "[ Análisis ] Valle de Productividad LPNs/hr" }
+        ]
+      ],
       ["Tarea", "Desarrollar un motor de priorización estático enfocado en el reabastecimiento del primer nivel (piso) para las categorías FOOD y ELECTRO, y rediseñar operativamente los pasillos para eliminar los tiempos de espera y alcanzar el SLA de 20 Líneas por Hora Hombre (L/HH)."],
-      ["Acción", "Programé un algoritmo matemático en VBA que corre directamente en memoria RAM. Este motor evalúa la urgencia (fecha del pedido), frecuencia de aparición y volumen para seleccionar qué SKUs bajar, aplicando reglas de 4 niveles (FEFO > Jerarquía UM > Clearing de saldo > Enrutamiento). A nivel físico, se aislaron 2 pasillos por categoría, bloqueando el almacenamiento de paletas completas en piso y aplicando técnicas de <b>Slotting</b> (ordenando artículos de mayor peso al inicio de la ruta de picking) para evitar tiempos de reacomodo.", ""],
-      ["Resultado", "Evolución radical del ratio de atención en FOOD y ELECTRO: pasamos de 60/40 a <b>80% piso y 20% altura</b>. La asertividad de la plantilla alcanzó el 100%, logrando bajar de <b>210 a 220 paletas preventivas por turno</b> (dejando fuera temporalmente a NON FOOD por su alta rotación de SKUs activos). El valle productivo matutino fue erradicado, permitiendo iniciar el pico de picking directamente a las 07:00 AM. Como impacto final, el <i>throughput</i> en FOOD creció de 20 a 26-28 L/HH, elevando la productividad general a <b>23 L/HH</b> y superando la meta contractual.", "tobe"]
+      [
+        "Acción", 
+        "Programé un algoritmo matemático en VBA que corre directamente en memoria RAM. Este motor evalúa la urgencia (fecha del pedido), frecuencia de aparición y volumen para seleccionar qué SKUs bajar, aplicando reglas de 4 niveles (FEFO > Jerarquía UM > Clearing de saldo > Enrutamiento). A nivel físico, se aislaron 2 pasillos por categoría, bloqueando el almacenamiento de paletas completas en piso y aplicando técnicas de <b>Slotting</b> (ordenando artículos de mayor peso al inicio de la ruta de picking) para evitar tiempos de reacomodo.", 
+        [
+          { key: "accion_hoja1", label: "[ Output Macro ] Hoja de Trabajo 1" },
+          { key: "accion_hoja2", label: "[ Output Macro ] Hoja de Trabajo 2" }
+        ]
+      ],
+      [
+        "Resultado", 
+        "Evolución radical del ratio de atención en FOOD y ELECTRO: pasamos de 60/40 a <b>80% piso y 20% altura</b>. La asertividad de la plantilla alcanzó el 100%, logrando bajar de <b>210 a 220 paletas preventivas por turno</b> (dejando fuera temporalmente a NON FOOD por su alta rotación de SKUs activos). El valle productivo matutino fue erradicado, permitiendo iniciar el pico de picking directamente a las 07:00 AM. Como impacto final, el <i>throughput</i> en FOOD creció de 20 a 26-28 L/HH, elevando la productividad general a <b>23 L/HH</b> y superando la meta contractual.", 
+        [
+          { key: "resultado_food", label: "[ Impacto ] Participación Piso vs Altura (FOOD)" },
+          { key: "resultado_electro", label: "[ Impacto ] Participación Piso vs Altura (ELECTRO)" }
+        ]
+      ]
     ]
   }
 };
@@ -477,11 +496,17 @@ const IMAGES = {
     resultado_detalles: "./YMS/Detalle_locales.png"   
   },
   calidad: { 
-    asis: "./YMS/Ingreso Calidad.png", 
-    resultado_app: "./YMS/REGISTRO CONTENEDORES.png",      // Agrega aquí la ruta de la foto de la interfaz de la App
-    resultado_reporte: "./YMS/REGISTRO CANTIDADES.png"   // Agrega aquí la ruta de la foto del Reporte Generado
+    asis: "./img/calidad-antes.jpg", 
+    resultado_app: "",      
+    resultado_reporte: ""   
   },
-  reabasto: { asis: "", tobe: "" }
+  reabasto: { 
+    asis_grafico: "",       // Agrega aquí la ruta de la foto del gráfico LPNs
+    accion_hoja1: "",       // Agrega aquí la ruta de la Hoja 1 de la macro
+    accion_hoja2: "",       // Agrega aquí la ruta de la Hoja 2 de la macro
+    resultado_food: "",     // Agrega aquí la ruta del gráfico de participación FOOD
+    resultado_electro: ""   // Agrega aquí la ruta del gráfico de participación ELECTRO
+  }
 };
 
 // Modificado para aceptar objetos individuales de configuración o strings simples
