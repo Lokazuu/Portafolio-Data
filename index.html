@@ -421,12 +421,18 @@ const DATA = {
         "Desarrollé una interfaz móvil en AppSheet para uso en patio, estructurando el flujo en estados restrictivos (1. PENDIENTE, 2. EN PLAYA, 3. EN RAMPA, 4. ATENDIDO). El aplicativo captura con precisión timestamps de hitos logísticos (llegada, inicio/fin de descarga) y volumetría (Paletas ISO). Para el back-office, construí un ecosistema de macros en Excel que genera plantillas estandarizadas y consolida la data estructurada de los estados para su análisis masivo.", 
         [
           { key: "accion_plantilla", label: "[ Back-office ] Plantilla de Control Excel" },
-          { key: "status_plantilla", label: "[ Back-office ] Matriz Status Plantilla" },
-          { key: "accion_app1", label: "[ Front-end ] Captura de tiempos logísticos" },
-          { key: "accion_app2", label: "[ Front-end ] Dashboard de Estados restrictivos" }
+          { key: "status_plantilla", label: "[ Back-office ] Matriz Status Plantilla" }
         ]
       ],
-      ["Resultado", "Transición de un modelo de datos deficiente a uno con 100% de trazabilidad unitaria y cero errores de tipado. La automatización de los timestamps permitió medir el Touch Time real por rampa, proveyendo la data limpia y exacta requerida para sustentar el plan de expansión de capacidades Cencosud 2030.", "tobe"]
+      [
+        "Resultado", 
+        "Transición de un modelo de datos deficiente a uno con 100% de trazabilidad unitaria y cero errores de tipado. La automatización de los timestamps permitió medir el Touch Time real por rampa, proveyendo la data limpia y exacta requerida para sustentar el plan de expansión de capacidades Cencosud 2030.", 
+        [
+          { key: "resultado_menu", label: "[ App UI ] Menú Principal" },
+          { key: "resultado_locales", label: "[ App UI ] Pantalla de Locales" },
+          { key: "resultado_detalles", label: "[ App UI ] Captura de Detalles" }
+        ]
+      ]
     ]
   },
   calidad: {
@@ -457,11 +463,11 @@ const DATA = {
 const IMAGES = {
   yms: { 
     asis: "./YMS/reporte_anterior.jpeg", 
-    tobe: "./img/yms-despues.jpg",
     accion_plantilla: "./YMS/plantilla_local.png", 
     status_plantilla: "./YMS/STATUS.jpeg",
-    accion_app1: "",      // Agrega aquí la ruta de la primera foto del aplicativo
-    accion_app2: ""       // Agrega aquí la ruta de la segunda foto del aplicativo
+    resultado_menu: "",      // Agrega aquí la ruta de la foto de tu Menú Principal
+    resultado_locales: "",   // Agrega aquí la ruta de la foto de tu Pantalla de Locales
+    resultado_detalles: ""   // Agrega aquí la ruta de la foto de tu Captura de Detalles
   },
   calidad: { asis: "./img/calidad-antes.jpg", tobe: "" },
   reabasto: { asis: "", tobe: "" }
